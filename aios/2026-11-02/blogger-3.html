@@ -1,0 +1,43 @@
+<div class="separator" style="text-align:center;"><img src="https://raw.githubusercontent.com/Abhaykumarsfg5485/Book-crator/orinvue-media/aios/2026-11-02/post-3.jpg" alt="ORINvue AIOS concept preview" width="540" style="max-width:100%;height:auto;" /></div>
+<p>Partly, yes. On October 31, 2026, Vercel Labs’ Chris Tate announced agent-desktop, a free, open-source tool that lets AI coding agents read and operate desktop apps on macOS, Windows and Linux, which he called “agent-browser, for your whole computer” (<a href="https://www.aichatdaily.com/ai-tools/vercel-labs-releases-agent-desktop-giving-coding-agents-control">AI Chat Daily</a>). It is a real step toward agents that work across your apps, but it is a developer tool with clear limits, not a finished personal assistant for everyday people.</p>
+<p>Here is what was actually released, why the approach is interesting, and what it does and does not change.</p>
+<h2>What Vercel Labs released</h2>
+<p>According to AI Chat Daily’s report, published November 2, 2026:</p>
+<ul>
+<li>agent-desktop is a Rust command-line tool plus a C library, licensed under Apache 2.0 and installed through npm.</li>
+<li>Version 1.0, which added Linux support, shipped on October 28, and version 1.0.2 followed on October 30.</li>
+<li>It contains no language model of its own. It works with Claude Code, OpenAI’s Codex or any agent that can run shell commands.</li>
+<li>The project lists about 56 commands covering observation, clicks and typing, windows, notifications, the clipboard and sessions.</li>
+</ul>
+<p>Source: <a href="https://www.aichatdaily.com/ai-tools/vercel-labs-releases-agent-desktop-giving-coding-agents-control">Vercel Labs releases agent-desktop, giving coding agents control of desktop apps</a>, AI Chat Daily.</p>
+<h2>Why the approach is smart</h2>
+<p>Many “computer use” agents work by taking screenshots and asking a model to guess where to click. That is slow and fragile: a button moves a few pixels, or a pop-up appears, and the agent clicks the wrong thing.</p>
+<p>agent-desktop takes a different route. It reads the operating system’s accessibility tree, the same structured layer screen readers use: the AX API on macOS, UI Automation on Windows and AT-SPI on Linux. A snapshot returns JSON with a reference for each element the agent can act on. The agent acts on those references, then takes a fresh snapshot to confirm the change.</p>
+<p>Two details stood out to us:</p>
+<ul>
+<li><strong>It admits when the screen changed.</strong> References are tied to the snapshot that produced them. If the interface shifts before an action lands, the tool returns errors like STALE_REF or AMBIGUOUS_TARGET so the agent knows to look again instead of clicking blindly.</li>
+<li><strong>It stays out of your way.</strong> Actions run headless by default, so your real mouse pointer does not move and focus is not stolen. In multi-agent sessions, each subagent gets its own colored cursor.</li>
+</ul>
+<p>That is the right instinct. An agent that knows when it is unsure is far more useful than one that is confidently wrong.</p>
+<h2>What it does not do (yet)</h2>
+<p>The honest part matters just as much:</p>
+<ul>
+<li><strong>It is for developers.</strong> Today it plugs into coding agents through the command line. It is not an app a typical user downloads to plan a trip.</li>
+<li><strong>It only sees accessible apps.</strong> Apps without an accessibility tree are invisible to it.</li>
+<li><strong>It does not automate web pages.</strong> Vercel points people to its separate agent-browser tool for that.</li>
+<li><strong>Privacy needs care.</strong> The developers warn that snapshots, screenshots and clipboard reads can contain private data and should not go into public logs.</li>
+<li><strong>System requirements apply.</strong> macOS 13 or later with Accessibility permission, Windows 10 version 1809 or later, or Ubuntu 24.04 or later with AT-SPI running.</li>
+</ul>
+<p>So no, your laptop did not become self-driving overnight. What changed is that the plumbing for reliable, cross-app agents got better and more open.</p>
+<h2>What this means for regular users in the US</h2>
+<p>For most people, the takeaway is about direction, not a download. Agents are moving from “chat in a box” to software that can work across the apps you already use: your inbox, your calendar, your files, your browser. Tools like this make that safer and more reliable to build. Expect the next wave of personal AI to be judged less on clever answers and more on whether it can finish real tasks without breaking things or overstepping.</p>
+<p>The questions worth asking any agent, now more than ever: Does it ask before acting on something important? Does it show what it did? Does it keep your private data private?</p>
+<div class="separator" style="text-align:center;"><img src="https://raw.githubusercontent.com/Abhaykumarsfg5485/Book-crator/orinvue-media/aios/2026-11-02/inline-3.jpg" alt="AI agent reading a desktop accessibility tree, concept illustration" width="800" style="max-width:100%;height:auto;" /></div>
+<h2>How ORINvue AIOS will help (coming soon)</h2>
+<p>ORINvue AIOS is a personal AI operating system and AI agent in development, designed for everyday people rather than only developers. From one command, it is being built to handle research, building, computer use and tasks like booking flights and hotels, replying to email, managing your calendar, filling forms, organizing files and shopping. It follows four steps, Think, Plan, Act, Learn, and is designed to ask before it pays or sends anything for you. ORINvue AIOS is not available yet. It is coming soon.</p>
+<h2>FAQ</h2>
+<p><strong>What is Vercel agent-desktop?</strong> A free, open-source tool from Vercel Labs that lets AI agents read and operate desktop apps on macOS, Windows and Linux through the operating system’s accessibility tree, as reported by AI Chat Daily.</p>
+<p><strong>Does agent-desktop include its own AI model?</strong> No. It contains no language model. It works with agents such as Claude Code or Codex, or any agent that can run shell commands.</p>
+<p><strong>Can it control websites?</strong> No. It does not automate web pages; Vercel points users to its agent-browser tool for that.</p>
+<p><strong>Is it safe to let an agent control my computer?</strong> Use care. The developers themselves warn that snapshots and clipboard reads can contain private data. Only grant access to agents you trust, and prefer ones that ask before important actions.</p>
+<p>ORINvue AIOS is being built by Carkin, founded by Abhay Kumar.</p>
